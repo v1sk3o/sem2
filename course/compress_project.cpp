@@ -26,9 +26,7 @@ public:
 		capacity = len >= 256 ? len + 1 : 256;
 		ptr = new char[capacity];
 		for (int i = 0; i < len; i++)
-		{
 			ptr[i] = s[i];
-		}
 		ptr[len] = '\0';
 	}
 	~BaseCompress()
@@ -57,9 +55,7 @@ public:
 		for (int i = 0; i < len - 1; i++)
 		{
 			if (ptr[i] == ptr[i + 1])
-			{
 				num++;
-			}
 			else
 			{
 				dict[count] = to_string(num);
@@ -71,13 +67,9 @@ public:
 		}
 
 		if (ptr[len - 2] == ptr[len - 1])
-		{
 			dict[count] = to_string(count);
-		}
 		else
-		{
 			dict[count] = "1";
-		}
 		count++;
 		dict[count] = ptr[len - 1];
 		count++;
@@ -87,18 +79,14 @@ public:
 		for (int i = 0; i < count; i++)
 		{
 			if (i % 2 != 0)
-			{
 				file << dict[i] << " ";
-			}
 			output += dict[i];
 		}
 		file << '\n';
 		for (int i = 0; i < count; i++)
 		{
 			if (i % 2 == 0)
-			{
 				file << " " << dict[i];
-			}
 		}
 		file.close();
 
@@ -120,9 +108,7 @@ public:
 				for (int j = i + 1; j < len; j++)
 				{
 					if (ptr[j] >= '0' && ptr[j] <= '9')
-					{
 						n = n * 10 + (ptr[j] - '0');
-					}
 					else
 					{
 						c = ptr[j];
@@ -130,9 +116,7 @@ public:
 					}
 				}
 				for (int j = 0; j < n; j++)
-				{
 					output += c;
-				}
 				count += n;
 			}
 		}
@@ -175,9 +159,7 @@ public:
 								}
 							}
 							else
-							{
 								flag = true;
-							}
 						}
 					}
 					file.close();
@@ -187,9 +169,7 @@ public:
 					cout << " Symbol | Repeats " << endl;
 					cout << "------------------" << endl;
 					for (int i = 0; i < count_str; i++)
-					{
 						cout << " " << sym[i] << " | " << num[i] << endl;
-					}
 
 					delete[] sym;
 					sym = NULL;
@@ -222,9 +202,7 @@ public:
 		bool flag = true;
 
 		if (len > 10)
-		{
 			cout << "\nAttention: possible data loss!\n";
-		}
 
 		for (int i = 0; i < len; i++)
 		{
@@ -249,9 +227,7 @@ public:
 			for (int j = 0; j < len; j++)
 			{
 				if (sym[i] == ptr[j])
-				{
 					count++;
-				}
 			}
 			period[i] = ((double)count) / len + save;
 			save = period[i];
@@ -279,9 +255,7 @@ public:
 					line = right - left;
 					left_cpy = left;
 					for (int k = 0; k < len_res; k++)
-					{
 						temp[k] = left + period[k] * line;
-					}
 				}
 			}
 		}
@@ -289,14 +263,10 @@ public:
 		ofstream file("stats.txt");
 		file << "2\n" << len << "\n";
 		for (int i = 0; i < len_res; i++)
-		{
 			file << sym[i] << " ";
-		}
 		file << '\n';
 		for (int i = 0; i < len_res - 1; i++)
-		{
 			file << " " << (long long)(period[i] * LONG);
-		}
 		file.close();
 
 		string output;
@@ -344,9 +314,7 @@ public:
 						}
 					}
 					else
-					{
 						flag = true;
-					}
 				}
 			}
 			file.close();
@@ -367,13 +335,9 @@ public:
 				{
 					output += sym[j];
 					if (j == 0)
-					{
 						res /= period[j];
-					}
 					else
-					{
 						res = (res - period[j - 1]) / (period[j] - period[j - 1]);
-					}
 					break;
 				}
 
@@ -422,9 +386,7 @@ public:
 							}
 						}
 						else
-						{
 							flag = true;
-						}
 					}
 				}
 				period[count_int] = 1;
@@ -439,13 +401,9 @@ public:
 				for (int i = 0; i < count_str; i++)
 				{
 					if (i == 0)
-					{
 						cout << " " << sym[i] << " | " << period[i] << " | " << "0" << " - " << period[i] << endl;
-					}
 					else
-					{
 						cout << " " << sym[i] << " | " << period[i] - period[i - 1] << " | " << period[i - 1] << " - " << period[i] << endl;
-					}
 				}
 
 				delete[] sym;
@@ -500,22 +458,16 @@ public:
 			string temp;
 			temp += ptr[i];
 			if (i != len - 1)
-			{
 				line = temp + ptr[i + 1];
-			}
 			else
-			{
 				line = temp;
-			}
 			for (int j = 0; j < len_res; j++)
 			{
 				if (i != len - 1 && line == dict[j])
 				{
 					i++;
 					if (i != len - 1)
-					{
 						line += ptr[i + 1];
-					}
 					j = 0;
 				}
 			}
@@ -544,9 +496,7 @@ public:
 		ofstream file("stats.txt");
 		file << "3\n";
 		for (int i = 0; i < len_res; i++)
-		{
 			file << dict[i] << " ";
-		}
 		file << '\n';
 		for (int i = 0; i < len_res - diff; i++)
 		{
@@ -595,9 +545,7 @@ public:
 						}
 					}
 					else
-					{
 						flag = true;
-					}
 				}
 			}
 			file.close();
@@ -609,9 +557,7 @@ public:
 		}
 
 		for (int i = 0; i < count_int; i++)
-		{
 			output += dict[num[i]];
-		}
 
 		delete[] dict;
 		dict = NULL;
@@ -655,9 +601,7 @@ public:
 							}
 						}
 						else
-						{
 							flag = true;
-						}
 					}
 				}
 				file.close();
@@ -670,13 +614,9 @@ public:
 				for (int i = diff; i < count_str; i++)
 				{
 					if (i != count_str - 1)
-					{
 						cout << " " << num[i - diff] << " | " << dict[i] << " | " << dict[i].substr(0, dict[i].length() - 1) << endl;
-					}
 					else
-					{
 						cout << " " << num[i - diff] << " | " << dict[i] << " | " << dict[i] << endl;
-					}
 				}
 
 				delete[] dict;
@@ -842,7 +782,5 @@ int main()
 		}
 	}
 	else
-	{
 		cout << endl << "There is no file with name '" << name << "'!" << endl;
-	}
 }
